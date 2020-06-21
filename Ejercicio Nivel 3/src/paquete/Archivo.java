@@ -44,7 +44,38 @@ public class Archivo {
 		}
 		return texto;
 	}
-	
-	
-	String direccion;
+
+	public void extraeDatosArchivo(String direccion) {
+		try {
+			BufferedReader bf = new BufferedReader(new FileReader(this.direccion));
+			String linea = "";
+			if ((linea = bf.readLine()) != null) {
+				this.cantidadDeNotas = Integer.parseInt(linea);
+				linea = "";
+			}
+			if ((linea = bf.readLine()) != null) {
+				notas = new int[this.cantidadDeNotas];
+				String lineaSinEspacios = "";
+				for (int i = 0; i < linea.length(); i++) {
+					if (linea.charAt(i) != ' ') {
+						lineaSinEspacios += linea.charAt(i);
+					}
+				}
+				for (int j = 0; j < this.cantidadDeNotas; j++) {
+					notas[j] = (int) lineaSinEspacios.charAt(j);
+				}
+			}
+			bf.close();// cierro el archivo
+		} catch (IOException e) {// controlo excepciones
+			System.out.println("No se encuentra el archivo");
+		}
+	}
+
+	public int[] dimeNotas() {
+		return this.notas;
+	}
+
+	private String direccion;
+	private int cantidadDeNotas = 0;
+	private int notas[];
 }
