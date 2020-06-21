@@ -12,10 +12,9 @@ public class Archivo {
 		this.direccion = direccion;
 	}
 
-	public void escribeArchivo() {
+	public void escribeArchivo(String linea) {
 		try (FileWriter archivo = new FileWriter(this.direccion, true)) {
-			String texto = "";
-			texto = JOptionPane.showInputDialog("Ingrese el texto\n");
+			String texto = linea;
 			texto += "\r\n";
 			archivo.write(texto);
 			archivo.close();// cierro el archivo
@@ -69,11 +68,17 @@ public class Archivo {
 		} catch (IOException e) {// controlo excepciones
 			System.out.println("No se encuentra el archivo");
 		}
+		
 	}
 
 	public int[] dimeNotas() {
 		return this.notas;
 	}
+	
+	public int cantNotas() {
+		return cantidadDeNotas;
+	}
+	
 
 	private String direccion;
 	private int cantidadDeNotas = 0;
