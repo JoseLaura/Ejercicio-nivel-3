@@ -17,8 +17,8 @@ public class Archivo {
 			String texto = linea;
 			texto += "\r\n";
 			archivo.write(texto);
-			archivo.close();// cierro el archivo
-		} catch (IOException e) {// controlo excepciones
+			archivo.close();
+		} catch (IOException e) {
 			System.out.println("No se encuentra el archivo");
 		}
 	}
@@ -29,16 +29,13 @@ public class Archivo {
 			BufferedReader bf = new BufferedReader(new FileReader(this.direccion));
 			String temp = "";
 			String bfRead;
-			while ((bfRead = bf.readLine()) != null) {// Este while avanza linea por linea
-				temp += bfRead;// guardo el contenido de la linea del archivo en la variable temporal
-				temp += "\n";/*
-								 * guardo en la variable String temporal un salto de linea antes de guardar la
-								 * siguente linea en esta variable
-								 */
+			while ((bfRead = bf.readLine()) != null) {
+				temp += bfRead;
+				temp += "\n";
 			}
-			texto = temp;// aqui asigno el contenido de temp a la variable String que retorno
-			bf.close();// cierro el archivo
-		} catch (IOException e) {// controlo excepciones
+			texto = temp;
+			bf.close();
+		} catch (IOException e) {
 			System.out.println("No se encuentra el archivo");
 		}
 		return texto;
@@ -54,31 +51,32 @@ public class Archivo {
 			}
 			if ((linea = bf.readLine()) != null) {
 				notas = new int[this.cantidadDeNotas];
-				String lineaSinEspacios = "";
+				int j = 0;
+				String valor = "";
 				for (int i = 0; i < linea.length(); i++) {
 					if (linea.charAt(i) != ' ') {
-						lineaSinEspacios += linea.charAt(i);
+						valor += linea.charAt(i);
+					}
+					if (linea.charAt(i) == ' ' || i == linea.length() - 1) {
+						notas[j] = Integer.parseInt(valor);
+						valor = "";
+						j++;
 					}
 				}
-				for (int j = 0; j < this.cantidadDeNotas; j++) {
-					notas[j] = (int) lineaSinEspacios.charAt(j);
-				}
 			}
-			bf.close();// cierro el archivo
-		} catch (IOException e) {// controlo excepciones
+			bf.close();
+		} catch (IOException e) {
 			System.out.println("No se encuentra el archivo");
 		}
-		
 	}
 
 	public int[] dimeNotas() {
 		return this.notas;
 	}
-	
+
 	public int cantNotas() {
 		return cantidadDeNotas;
 	}
-	
 
 	private String direccion;
 	private int cantidadDeNotas = 0;
